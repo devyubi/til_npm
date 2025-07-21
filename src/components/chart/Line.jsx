@@ -1,23 +1,3 @@
-# Nivo Chart
-
-- https://nivo.rocks
-- https://github.com/plouc/nivo#readme
-
-## 1. 기본형 설치
-
-```bash
-npm i @nivo/core --force
-```
-
-## 2. Line Chart 설치
-
-```bash
-npm i @nivo/line --force
-```
-
-- 실제 회사에서는 fetch 로 호출해서 사용함.
-
-```jsx
 import React, { useEffect, useState } from "react";
 import { ResponsiveLine } from "@nivo/line";
 import { lineData } from "../../apis/line_data";
@@ -26,17 +6,42 @@ function Line() {
   // js 자리
   const [data, setData] = useState([]);
   // 데이터 부르는 함수 만들기
-  const getData = async () => {
+  const getData = () => {
     try {
       // fetch 를 이용한 데이터 호출
-      const res = await fetch("/line_data.json");
-      const json = await res.json();
+      const res = localStorage.getItem("line_data");
+      const json = JSON.parse(res);
       // 데이터 갱신
       setData(json);
     } catch (error) {
       console.log(error);
     }
   };
+  // 로컬스토리지에 데이터 저장하기
+  const saveData = () => {
+    const tempData = [
+      {
+        id: "point1",
+        data: [
+          { x: "좋음", y: 5 },
+          { x: "치킨", y: 78 },
+          { x: "boat", y: 276 },
+          { x: "train", y: 55 },
+          { x: "subway", y: 144 },
+          { x: "bus", y: 216 },
+          { x: "car", y: 253 },
+          { x: "moto", y: 102 },
+          { x: "bicycle", y: 156 },
+          { x: "horse", y: 131 },
+          { x: "skateboard", y: 147 },
+          { x: "others", y: 232 },
+        ],
+      },
+    ];
+    const jsData = JSON.stringify(tempData);
+    localStorage.setItem("line_data", jsData);
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -44,6 +49,7 @@ function Line() {
   return (
     <div>
       <h1>Line 차트 예제</h1>
+      <button onClick={saveData}>localstorage 저장하기</button>
       <div style={{ width: "100%", height: 600 }}>
         <ResponsiveLine /* or Line for fixed dimensions */
           data={data}
@@ -81,10 +87,3 @@ function Line() {
 }
 
 export default Line;
-```
-
-## 3. Bar Chart 설치
-
-```bash
-npm i @nivo/bar --force
-```

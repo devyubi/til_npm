@@ -10,9 +10,14 @@ function Line() {
     try {
       // fetch 를 이용한 데이터 호출
       const res = localStorage.getItem("line_data");
-      const json = JSON.parse(res);
-      // 데이터 갱신
-      setData(json);
+      if (!res) {
+        const temp = JSON.stringify(data);
+        localStorage.setItem("line_data", temp);
+      } else {
+        const json = JSON.parse(res);
+        // 데이터 갱신
+        setData(json);
+      }
     } catch (error) {
       console.log(error);
     }

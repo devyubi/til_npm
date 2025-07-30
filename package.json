@@ -8,6 +8,7 @@
     "@nivo/bar": "^0.99.0",
     "@nivo/core": "^0.99.0",
     "@nivo/line": "^0.99.0",
+    "antd": "^5.26.7",
     "dayjs": "^1.11.13",
     "eslint-plugin-prettier": "^5.5.3",
     "moment": "^2.30.1",

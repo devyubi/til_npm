@@ -1,11 +1,13 @@
+import PwForm from "./components/form/PwForm";
 import Header from "./components/layout/Header";
-import Slide from "./pages/Slide";
+import JoinPage from "./pages/JoinPage";
 
 function App() {
   return (
     <div>
       <Header />
-      <Slide />
+      <JoinPage />
+      <PwForm />
     </div>
   );
 }

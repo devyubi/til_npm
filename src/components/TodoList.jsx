@@ -1,23 +1,42 @@
 import { useRecoilState } from "recoil";
 import { todoListAtom } from "../atoms/TodoListAtom";
 import { useState } from "react";
-import { loginAtom } from "../atoms/LoginAtom";
 
 function TodoList() {
-  const [isLogin, setIsLogin] = useRecoilState(loginAtom);
   const [todo, setTodo] = useRecoilState(todoListAtom);
   const [text, setText] = useState("");
-
   const add = () => {
-    // atom의 데이터를 업데이트함
-    setTodo([...todo, { id: new Date(), title: text, completed: false }]);
+    if (text !== "") {
+      // atom 의 데이터를 업데이트 함.
+      setTodo([...todo, { id: new Date(), title: text, completed: false }]);
+      setText("");
+    }
+  };
+  const deleteTodo = _item => {
+    // 전달 받은 todo 의 id를 비교해서 id 값이 다른 것만 별도로 뽑겠다.
+    // 남는 것은 id 가 다른 것들만 남는다.
+    const arr = todo.filter(item => item.id !== _item.id);
+    setTodo(arr);
+  };
+  const toggleTodo = _item => {
+    // item.completed == true ==> false
+    // item.completed === false ==> true
+    const arr = todo.map(item => {
+      if (item.id === _item.id) {
+        return { ...item, completed: !item.completed };
+      } else {
+        return item;
+      }
+    });
+    // todo.map(item =>
+    //   item.id === _item.id ? { ...item, completed: !item.completed } : item,
+    // );
+    setTodo(arr);
   };
 
   return (
     <div>
-      <h3>
-        Todo List 기능<button onClick={setIsLogin(true)}>로그인</button>
-      </h3>
+      <h3>Todo List 기능</h3>
       <div>
         <input
           type="text"
@@ -26,19 +45,24 @@ function TodoList() {
         />
         <button onClick={add}>추가</button>
       </div>
-      {isLogin && (
-        <div>
-          <h4>할일 목록</h4>
-          <ul>
-            {todo.map(item => (
-              <li key={item.id}>
-                <span>{item.title}</span>
-                <button onClick={() => console.log("삭제")}>삭제</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      <div>
+        <h4>할일 목록</h4>
+        <ul>
+          {todo.map(item => (
+            <li key={item.id}>
+              <span
+                style={{
+                  textDecoration: item.completed ? "line-through" : "none",
+                }}
+                onClick={() => toggleTodo(item)}
+              >
+                {item.title}
+              </span>
+              <button onClick={() => deleteTodo(item)}>삭제</button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }

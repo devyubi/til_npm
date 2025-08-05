@@ -1,15 +1,36 @@
-import { useEffect } from "react";
-import { getTodos } from "./apis/todoApi";
+import { IoSearch } from "react-icons/io5";
+import { FaStar } from "react-icons/fa6";
 
 function App() {
-  // js 자리
+  const point = 5;
+  const rate = 4;
 
-  useEffect(() => {
-    getTodos();
-  }, []);
-
-  // jsx 자리
-  return <div>App</div>;
+  return (
+    <div>
+      <h1>
+        App <IoSearch />
+      </h1>
+      <div>
+        <h2>
+          당신의별점(
+          <FaStar style={{ color: "gold", fontsize: 20 }} />
+          )은?
+        </h2>
+        <div>
+          {[...Array(point)].map((item, index) => {
+            return (
+              <FaStar
+                key={index}
+                style={{
+                  color: index < rate ? "gold" : "gray",
+                }}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default App;

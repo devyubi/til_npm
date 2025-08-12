@@ -1,17 +1,3 @@
-# Framer Motion
-
-- https://motion.dev/docs/react-layout-animations
-- https://examples.motion.dev/react
-- https://velog.io/@keumky1/Framer-Motion-입문하기
-- https://nykim.work/114
-- `npm install motion`
-- `npm i framer-motion`
-
-## 폴더 및 파일 구조
-
-- /src/
-
-```jsx
 import { motion } from "framer-motion";
 
 function Framer() {
@@ -60,4 +46,3 @@ function Framer() {
 }
 
 export default Framer;
-```
